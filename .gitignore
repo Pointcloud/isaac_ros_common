@@ -3,3 +3,6 @@
 
 # Ignore config files
 .isaac_ros_common-config
+
+# Ignore log files
+script.log 
