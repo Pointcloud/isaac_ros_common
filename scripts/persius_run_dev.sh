@@ -192,9 +192,10 @@ fi
 
 # Run container from image
 print_info "Running $CONTAINER_NAME"
-docker run -it --rm \
+docker run -it \
     --privileged \
     --network host \
+    --restart always \
     ${DOCKER_ARGS[@]} \
     -v /ssd/ros2_ws:/ssd/ros2_ws \
     -v /dev/*:/dev/* \
