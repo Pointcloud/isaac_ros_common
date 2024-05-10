@@ -24,6 +24,9 @@ if [[ -f "${ROOT}/.isaac_ros_common-config" ]]; then
     . "${ROOT}/.isaac_ros_common-config"
 fi
 
+# enable access to X11 from docker for the Zed camera
+xhost +
+
 ISAAC_ROS_DEV_DIR="/ssd/ros2_ws/src/isaac_ros-dev"
 print_info "setting ISAAC_ROS_DEV_DIR to /ssd/ros2_ws/src/isaac_ros-dev"
 
