@@ -12,8 +12,8 @@ cd /tmp
 
 #fixing issue of incorrect $USER in docker - https://github.com/stereolabs/zed-sdk/issues/11#issuecomment-388785887
 export USER=admin
-sudo mkdir -p /etc/udev/rules.d/
-sudo apt install udev
+# sudo mkdir -p /etc/udev/rules.d/
+# sudo apt install udev
 
 chmod +x ZED_SDK.run ; /ssd/ros2_ws/ZED_SDK.run skip_od_module skip_python skip_drivers
 
