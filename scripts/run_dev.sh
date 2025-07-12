@@ -114,6 +114,16 @@ if [[ ! -d "$ISAAC_ROS_DEV_DIR" ]]; then
     exit 1
 fi
 
+# Check if zed-ros2-wrapper exists and install if missing
+if [[ ! -d "$ISAAC_ROS_DEV_DIR/src/zed-ros2-wrapper" ]]; then
+    print_info "zed-ros2-wrapper not found, installing ZED SDK..."
+    sudo chmod +x ${ISAAC_ROS_DEV_DIR}/src/isaac_ros_common/docker/scripts/install-zed-aarch64.sh && \
+    ${ISAAC_ROS_DEV_DIR}/src/isaac_ros_common/docker/scripts/install-zed-aarch64.sh
+    if [[ $? -ne 0 ]]; then
+        print_warning "ZED SDK installation failed, continuing anyway..."
+    fi
+fi
+
 # Prevent running as root.
 if [[ $(id -u) -eq 0 ]]; then
     print_error "This script cannot be executed with root privileges."
