@@ -191,8 +191,9 @@ fi
 if [ "$(docker ps -a --quiet --filter status=running --filter name=$CONTAINER_NAME)" ]; then
     print_info "Attaching to running container: $CONTAINER_NAME"
     ISAAC_ROS_WS=$(docker exec $CONTAINER_NAME printenv ISAAC_ROS_WS)
-    print_info "Docker workspace: $ISAAC_ROS_WS"
-    docker exec -i -t -u admin --workdir $ISAAC_ROS_WS $CONTAINER_NAME /bin/bash $@
+    # print_info "Docker workspace: $ISAAC_ROS_WS"
+    # custom Pointcloud update to use the new entrypoint script
+    docker exec -i -t -u admin --workdir /ssd/workspaces/pointcloud/ $CONTAINER_NAME /ssd/workspaces/pointcloud/src/persius/provisioning/jetson/files/workspace-entrypoint-exec.sh /bin/bash $@
     exit 0
 fi
 
