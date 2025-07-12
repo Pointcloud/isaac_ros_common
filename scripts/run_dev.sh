@@ -121,6 +121,14 @@ if [[ ! -d "$ISAAC_ROS_DEV_DIR/src/zed-ros2-wrapper" ]]; then
     ${ISAAC_ROS_DEV_DIR}/src/isaac_ros_common/docker/scripts/install-zed-aarch64.sh
     if [[ $? -ne 0 ]]; then
         print_warning "ZED SDK installation failed, continuing anyway..."
+    else
+        print_info "Installing ZED ROS2 wrapper dependencies..."
+        cd ${ISAAC_ROS_DEV_DIR} && \
+        sudo apt update && \
+        rosdep update && rosdep install --from-paths src/zed-ros2-wrapper --ignore-src -r -y
+        if [[ $? -ne 0 ]]; then
+            print_warning "ZED dependencies installation failed, continuing anyway..."
+        fi
     fi
 fi
 
