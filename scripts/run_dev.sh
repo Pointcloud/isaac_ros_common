@@ -182,18 +182,33 @@ if [[ ! -z "$CONFIG_CONTAINER_NAME_SUFFIX" ]] ; then
 fi
 CONTAINER_NAME="$BASE_NAME-container"
 
-# Remove any exited containers.
-if [ "$(docker ps -a --quiet --filter status=exited --filter name=$CONTAINER_NAME)" ]; then
-    docker rm $CONTAINER_NAME > /dev/null
-fi
+# # Remove any exited containers.
+# if [ "$(docker ps -a --quiet --filter status=exited --filter name=$CONTAINER_NAME)" ]; then
+#     docker rm $CONTAINER_NAME > /dev/null
+# fi
 
-# Re-use existing container.
+# Re-use running container.
 if [ "$(docker ps -a --quiet --filter status=running --filter name=$CONTAINER_NAME)" ]; then
     print_info "Attaching to running container: $CONTAINER_NAME"
     ISAAC_ROS_WS=$(docker exec $CONTAINER_NAME printenv ISAAC_ROS_WS)
     # print_info "Docker workspace: $ISAAC_ROS_WS"
     # custom Pointcloud update to use the new entrypoint script for persius
     docker exec -i -t -u admin --workdir /ssd/workspaces/pointcloud/ $CONTAINER_NAME /ssd/workspaces/pointcloud/src/persius/provisioning/jetson/files/workspace-entrypoint-exec.sh /bin/bash $@
+    exit 0
+fi
+# add a line to print the container name to terminal
+print_info "Container name: $CONTAINER_NAME"
+
+# start existing container if stopped
+if [ "$(docker ps -a --quiet --filter status=exited --filter name=$CONTAINER_NAME)" ]; then
+    print_info "Found stopped container: $CONTAINER_NAME"
+    #restart the container
+    docker start $CONTAINER_NAME > /dev/null
+    print_info "Attaching to container: $CONTAINER_NAME"
+    ISAAC_ROS_WS=$(docker exec $CONTAINER_NAME printenv ISAAC_ROS_WS)
+    # print_info "Docker workspace: $ISAAC_ROS_WS"
+    # custom Pointcloud update to use the new entrypoint script for persius
+    docker exec -i -t -u admin --workdir /ssd/workspaces/pointcloud/ $CONTAINER_NAME /ssd/workspaces/pointcloud/src/persius/provisioning/jetson/files/workspace-entrypoint-restart.sh /bin/bash $@
     exit 0
 fi
 
@@ -281,7 +296,7 @@ print_info "Running $CONTAINER_NAME"
 if [[ $VERBOSE -eq 1 ]]; then
     set -x
 fi
-docker run -it --rm \
+docker run -it \
     --privileged \
     --network host \
     --ipc=host \
