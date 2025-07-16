@@ -1,0 +1,8 @@
+build_datetime: '2025-07-14T20:26:49.297467'
+git_branch: main
+git_commit_date: 2025-07-12 13:18:29 +0800
+git_commit_hash: 3a31d321a8825b672fb684f1769cc9ee0f24141d
+git_commit_message: Remove zed-ros2-wrapper installation check from run_dev.sh, moved
+  to entrypoint
+git_workspace_dirty: 'Yes'
+version: 3.2.10
