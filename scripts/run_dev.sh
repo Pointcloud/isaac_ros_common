@@ -307,5 +307,8 @@ docker run -it \
     --runtime nvidia \
     --entrypoint /usr/local/bin/scripts/workspace-entrypoint.sh \
     --workdir /workspaces/isaac_ros-dev \
+    --cap-add=sys_nice \
+    --ulimit rtprio=99 \
+    --ulimit memlock=-1 \
     $BASE_NAME \
     /bin/bash
