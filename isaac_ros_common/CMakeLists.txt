@@ -70,4 +70,4 @@ endif()
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/isaac_ros_common-version-info.cmake)
 generate_version_info(${PROJECT_NAME})
 
-ament_auto_package(INSTALL_TO_SHARE cmake)
+ament_auto_package(INSTALL_TO_SHARE cmake USE_SCOPED_HEADER_INSTALL_DIR)
