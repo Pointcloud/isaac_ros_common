@@ -193,7 +193,7 @@ if [ "$(docker ps -a --quiet --filter status=running --filter name=$CONTAINER_NA
     ISAAC_ROS_WS=$(docker exec $CONTAINER_NAME printenv ISAAC_ROS_WS)
     # print_info "Docker workspace: $ISAAC_ROS_WS"
     # custom Pointcloud update to use the new entrypoint script for persius
-    docker exec -i -t -u admin --workdir /ssd/workspaces/pointcloud/ $CONTAINER_NAME /ssd/workspaces/pointcloud/src/persius/provisioning/jetson/files/workspace-entrypoint-exec.sh /bin/bash $@
+    docker exec -i -t -u admin --workdir /ssd/workspaces/pointcloud/ $CONTAINER_NAME /ssd/workspaces/pointcloud/src/persius/provisioning/jetson/files/workspace-entrypoint-session.sh /bin/bash $@
     exit 0
 fi
 # add a line to print the container name to terminal
@@ -208,7 +208,7 @@ if [ "$(docker ps -a --quiet --filter status=exited --filter name=$CONTAINER_NAM
     ISAAC_ROS_WS=$(docker exec $CONTAINER_NAME printenv ISAAC_ROS_WS)
     # print_info "Docker workspace: $ISAAC_ROS_WS"
     # custom Pointcloud update to use the new entrypoint script for persius
-    docker exec -i -t -u admin --workdir /ssd/workspaces/pointcloud/ $CONTAINER_NAME /ssd/workspaces/pointcloud/src/persius/provisioning/jetson/files/workspace-entrypoint-restart.sh /bin/bash $@
+    docker exec -i -t -u admin --workdir /ssd/workspaces/pointcloud/ $CONTAINER_NAME /ssd/workspaces/pointcloud/src/persius/provisioning/jetson/files/workspace-entrypoint-session.sh /bin/bash $@
     exit 0
 fi
 
