@@ -54,6 +54,13 @@ for addition in /usr/local/bin/scripts/entrypoint_additions/*.sh; do
   fi
 done
 
+# Setup colored prompt and terminal preferences
+echo 'export PS1="\[\033[01;33m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "' >> /home/${USERNAME}/.bashrc
+echo 'export LS_COLORS="di=1;34:ln=1;36:so=1;35:pi=1;33:ex=1;32:bd=1;33:cd=1;33:su=1;31:sg=1;31:tw=1;34:ow=1;34:"' >> /home/${USERNAME}/.bashrc
+echo 'alias ls="ls --color=auto"' >> /home/${USERNAME}/.bashrc
+echo 'alias grep="grep --color=auto"' >> /home/${USERNAME}/.bashrc
+chown ${USERNAME}:${USERNAME} /home/${USERNAME}/.bashrc
+
 # Restart udev daemon
 service udev restart
 
